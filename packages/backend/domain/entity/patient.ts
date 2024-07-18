@@ -1,4 +1,4 @@
-import { PatientId } from "../value-object.ts/id.vo.js";
+import { PatientId } from "../value-object/id.vo.js";
 
 export class PatientEntity{
   private readonly _id: PatientId;
