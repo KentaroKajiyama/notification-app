@@ -7,6 +7,7 @@ export class HospitalEntity{
   private _name: string;
   private _ip_address: IpAddress;
   private _port: Port;
+  
 
   constructor(id: HospitalId, name: string, ip_address: IpAddress, port: Port) {
     this._id = id;
