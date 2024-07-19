@@ -1,11 +1,12 @@
 import { PatientId } from "../value-object/id.vo.js";
+import { createPatientId } from "../value-object/id.vo.js";
 
 export class PatientEntity{
   private readonly _id: PatientId;
   private _name: string;
 
-  constructor(id: PatientId, name: string) {
-    this._id = id;
+  constructor(id: string, name: string) {
+    this._id = createPatientId(id);
     this._name = name;
   }
 
@@ -15,5 +16,12 @@ export class PatientEntity{
 
   get getName(): string {
     return this._name;
+  }
+
+  toJSON() {
+    return {
+      id: this._id,
+      name: this._name
+    }
   }
 }
