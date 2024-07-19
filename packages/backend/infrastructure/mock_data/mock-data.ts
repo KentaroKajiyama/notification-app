@@ -2,39 +2,73 @@ import { Request, Response } from "express";
 
 export class ConnectionMockDB{
   static data: Map<string,[Request,Response]> = new Map();
-
-  static addData(key:string, value:[Request,Response]):void{
-    this.data.set(key, value);
+  static async addData(key:string, value:[Request,Response]):Promise<void> {
+    try{
+      if(!this.data.has(key)){
+        this.data.set(key, value);
+      } else {
+        throw new Error(`Data already exists for key: ${key}`);
+      }
+    } catch(error){
+      throw new Error(`Error adding data to DB: ${error}`);
+    }
   }
-
-  static removeData(key:string):void{
-    this.data.delete(key);
+  static async removeData(key:string):Promise<void>{
+    try{
+      if(this.data.has(key)){
+        this.data.delete(key);
+      } else {
+        throw new Error(`Data does not exist for key: ${key}`);
+      }
+    } catch(error){
+      throw new Error(`Error removing data from DB: ${error}`);
+    }
   }
-
-  static getData(key:string):[Request,Response] | undefined{
-    return this.data.get(key);
+  static async getData(key:string):Promise<[Request,Response] | undefined>{
+    try{
+      if(!this.data.has(key)){throw new Error(`Data does not exist for key: ${key}`);}
+      return this.data.get(key);
+    } catch(error){
+      throw new Error(`Error getting data from DB: ${error}`);
+    }
   }
-
 }
 
 type PatientData ={
   id: string,
   name: string
 }
-
 export class PatientMockDB{
   static data: PatientData[] = [];
-
-  static addData(patient: PatientData):void{
-    this.data.push(patient);
+  static async addData(patient: PatientData):Promise<void>{
+    try{
+      if(!this.data.some(p => p.id===patient.id)){
+        this.data.push(patient);
+      } else {
+        throw new Error(`Data already exists for patient id: ${patient.id}`);
+      }
+    } catch(error){
+      throw new Error(`Error adding data to DB: ${error}`);
+    }
   }
-
-  static removeData(id: string):void{
-    this.data = this.data.filter(p => p.id!==id);
+  static async removeData(id: string):Promise<void>{
+    try{
+      if(this.data.some(p => p.id===id)){
+        this.data = this.data.filter(p => p.id!==id);
+      } else {
+        throw new Error(`Data does not exist for patient id: ${id}`);
+      }
+    } catch(error){ 
+      throw new Error(`Error removing data from DB: ${error}`);
+    }
   }
-
-  static getData(id: string):PatientData | undefined{
-    return this.data.find(p => p.id===id);
+  static async getData(id: string):Promise<PatientData | undefined>{
+    try{
+      if(!this.data.some(p => p.id===id)){throw new Error(`Data does not exist for patient id: ${id}`);}
+      return this.data.find(p => p.id===id);
+    } catch(error){
+      throw new Error(`Error getting data from DB: ${error}`);
+    }
   }
 }
 
@@ -44,19 +78,32 @@ type HospitalData ={
   ip_address: string,
   port: number
 }
-
 export class HospitalMockDB{
   static data: HospitalData[] = [];
-
-  static addData(hospital: HospitalData):void{
-    this.data.push(hospital);
+  static async addData(hospital: HospitalData):Promise<void>{
+    try{
+      if(!this.data.some(h => h.id===hospital.id)){
+        this.data.push(hospital);
+      } else {
+        throw new Error(`Data already exists for hospital id: ${hospital.id}`);
+      }
+    } catch(error){
+      throw new Error(`Error adding data to DB: ${error}`);
+    }
   }
-
-  static removeData(id: string):void{
-    this.data = this.data.filter(h => h.id!==id);
+  static async removeData(id: string):Promise<void>{
+    try{
+      if(this.data.some(h => h.id===id)){
+        this.data = this.data.filter(h => h.id!==id);
+      } else {
+        throw new Error(`Data does not exist for hospital id: ${id}`);
+      }
+    } catch(error){ 
+      throw new Error(`Error removing data from DB: ${error}`);
+    }
   }
-
-  static getData(id: string):HospitalData | undefined{
+  static async getData(id: string):Promise<HospitalData | undefined>{
+    if(!this.data.some(h => h.id===id)){throw new Error(`Data does not exist for hospital id: ${id}`);}
     return this.data.find(h => h.id===id);
   }
 }
