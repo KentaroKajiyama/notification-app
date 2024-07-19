@@ -7,6 +7,9 @@ import { IServerSentEventsUseCase } from "../../app/hospital/sse.js";
 import "reflect-metadata";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../di/types.js";
+import { createPatientId } from "../../domain/value-object/id.vo.js";
+import { PatientEntity } from "../../domain/entity/patient.js";
+
 
 @injectable()
 export class ConnectionHandler {
@@ -61,9 +64,12 @@ export class ServerSentEventsHandler {
         res.status(400).json({ errors: errors.array() });
       }
       const { patient, hospital_id } = req.body;
-      const hospital = await this._searchHospitalUseCase.execute(hospital_id);
-      this._serverSentEventsUseCase.execute(patient, hospital);
-    }catch(err){
+      const hospital_valid = await this._searchHospitalUseCase.execute(hospital_id);
+      const patient_id = createPatientId(patient.id);
+      const patient_valid = new PatientEntity(patient_id, patient.name);
+      await this._serverSentEventsUseCase.execute(patient_valid, hospital_valid);
+      res.status(200).json({ message: "Success for SSE."});
+    } catch(err){
       console.error(err);
       res.status(500).json({ message: "Internal Server Error" });
     }
