@@ -1,0 +1,33 @@
+import { IConnectionManagerRepository } from "../../domain/repository/connection-manager.js";
+import { PatientEntity } from "../../domain/entity/patient.js";
+import { HospitalEntity } from "../../domain/entity/hospital.js";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../../di/types.js";
+
+export interface IServerSentEventsUseCase{
+  execute(patient: PatientEntity, hospital: HospitalEntity):Promise<void>;
+}
+@injectable()
+export class ServerSentEventsUseCaseImpl implements IServerSentEventsUseCase {
+  private _connectionManagerRepository: IConnectionManagerRepository;
+
+  constructor(@inject(TYPES.IHospitalRepository) connectionManagerRepository: IConnectionManagerRepository) {
+    this._connectionManagerRepository = connectionManagerRepository;
+  }
+
+  async execute(patient: PatientEntity, hospital: HospitalEntity): Promise<void> {
+    try{
+      const hospital_id = hospital.getId
+      const [request, response] = await this._connectionManagerRepository.getConnection(hospital_id);
+      if (!request ||!response) {
+        throw new Error("Connection not found");
+      }
+      // TODO:ipアドレスの確認等もう少し確実性を高めたい
+      // TODO:response.writeのエラーハンドリング
+      response.write(`data: ${JSON.stringify(patient)}\n\n`)
+    } catch(error) {
+      console.log(error);
+      throw new Error("There is an error in SSE.")
+    }
+  }
+}
