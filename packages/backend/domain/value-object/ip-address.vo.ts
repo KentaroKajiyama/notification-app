@@ -6,3 +6,5 @@ export const IpAddressSchema = z.object({
   ip_address: z.string().ip(errorMessage),
 });
 export type IpAddress = z.infer<typeof IpAddressSchema>;
+
+export const parseIpAddress = (ipAddressString: string): IpAddress => IpAddressSchema.parse(ipAddressString);

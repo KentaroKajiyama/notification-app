@@ -7,3 +7,5 @@ export const PortSchema = z.object({
 });
 
 export type Port = z.infer<typeof PortSchema>;
+
+export const parsePort = (portString: string): Port => PortSchema.parse(portString);
