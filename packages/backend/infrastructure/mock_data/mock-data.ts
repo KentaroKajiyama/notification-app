@@ -82,7 +82,7 @@ type HospitalData ={
   id: string,
   name: string,
   ip_address: string,
-  port: number
+  port: string
 }
 export class HospitalMockDB{
   static data: HospitalData[] = [];
@@ -108,8 +108,17 @@ export class HospitalMockDB{
       throw new Error(`Error removing data from DB: ${error}`);
     }
   }
-  static async getData(id: string):Promise<HospitalData | undefined>{
-    if(!this.data.some(h => h.id===id)){throw new Error(`Data does not exist for hospital id: ${id}`);}
-    return this.data.find(h => h.id===id);
+  static async getData(id: string):Promise<HospitalData>{
+    try{
+      if(!this.data.some(h => h.id===id)){throw new Error(`Data does not exist for hospital id: ${id}`);}
+      const data = this.data.find(h => h.id===id);
+      if(data === undefined){
+        throw new Error(`Data does not exist for hospital id : ${id}`)
+      }
+      return data;
+    } catch(error){
+      console.log(error);
+      throw new Error(`Error getting data from DB: ${error}`)
+    }
   }
 }
