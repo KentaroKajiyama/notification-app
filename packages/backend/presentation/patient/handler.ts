@@ -12,11 +12,11 @@ export class CheckinHandler {
   constructor(@inject(TYPES.ISearchPatientUseCase) searchPatientUseCase: ISearchPatientUseCase) {
     this._searchPatientUseCase = searchPatientUseCase;
   }
-  async execute(req: Request, res: Response):Promise<any>{
+  async execute(req: Request, res: Response):Promise<void>{
     try{
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        res.status(400).json({ errors: errors.array() });
       }
       const { patient_id, hospital_id } = req.body;
       const patient = await this._searchPatientUseCase.execute(patient_id);
@@ -24,7 +24,7 @@ export class CheckinHandler {
       res.status(200).json({ message: "Check-in successful" });
     } catch(err){
       console.error(err);
-      return res.status(500).json({ message: "Internal Server Error" });
+      res.status(500).json({ message: "Internal Server Error" });
     }
   }
 }
