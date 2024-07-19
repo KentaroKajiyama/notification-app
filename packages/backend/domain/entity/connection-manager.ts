@@ -1,18 +1,10 @@
 import { HospitalId } from "../value-object/id.vo.js";
-import { Response } from "express";
+import { Request,Response } from "express";
 
 export class ConnectionManager {
-  private connections: Map<HospitalId, Response> = new Map();
+  private _connections: Map<HospitalId, [Request,Response]> = new Map();
 
-  addConnection(id: HospitalId, response: Response): void {
-    this.connections.set(id, response);
-  }
-
-  removeConnection(id: HospitalId): void {
-    this.connections.delete(id);
-  }
-
-  getConnection(id: HospitalId): Response | undefined {
-    return this.connections.get(id);
+  constructor(connections: Map<HospitalId, [Request, Response]>) {
+    this._connections = connections;
   }
 }

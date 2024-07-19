@@ -1,8 +1,9 @@
 import { HospitalId } from "../value-object/id.vo.js";
+import { Request, Response } from "express";
 
-export interface ConnectionManagerRepository {
-  addConnection(id: HospitalId, response: any): void;
-  removeConnection(id: HospitalId): void;
-  getConnection(id: HospitalId): any | undefined;
+export interface IConnectionManagerRepository {
+  addConnection(id: HospitalId, request: Request, response: Response): Promise<void>;
+  removeConnection(id: HospitalId): Promise<void>;
+  getConnection(id: HospitalId): Promise<[Request, Response]>;
 }
 
