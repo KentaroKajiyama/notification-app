@@ -24,10 +24,16 @@ export class ConnectionMockDB{
       throw new Error(`Error removing data from DB: ${error}`);
     }
   }
-  static async getData(key:string):Promise<[Request,Response] | undefined>{
+  static async getData(key:string):Promise<[Request,Response]>{
     try{
-      if(!this.data.has(key)){throw new Error(`Data does not exist for key: ${key}`);}
-      return this.data.get(key);
+      if(!this.data.has(key)){
+        throw new Error(`Data does not exist for key: ${key}`);
+      }
+      const data = this.data.get(key);
+      if(data === undefined){
+        throw new Error("Data is undefined")
+      }
+      return data;
     } catch(error){
       throw new Error(`Error getting data from DB: ${error}`);
     }
