@@ -3,9 +3,7 @@ import { uuidv7 } from "uuidv7";
 
 const errorMessage = "未入力または不正なidです。";
 
-const UuidSchema = z.object({
-  id: z.string().uuid(errorMessage),
-});
+const UuidSchema = z.string().uuid(errorMessage).brand("id");
 
 export function createId<T extends ZodType<any, ZodTypeDef, any>>(
   schema: T, fromStringId?: string,
