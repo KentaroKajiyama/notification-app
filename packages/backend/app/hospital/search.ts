@@ -1,7 +1,7 @@
-import { IHospitalRepository } from "../../domain/repository/hospital-repository.js";
+import { IHospitalRepository } from "../../domain/repository/hospital-repository.ts";
 import { inject, injectable } from "inversify";
-import { HospitalEntity } from "../../domain/entity/hospital.js";
-import { TYPES } from "../../di/types.js";
+import { HospitalEntity } from "../../domain/entity/hospital.ts";
+import { TYPES } from "../../di/types.ts";
 
 
 export interface ISearchHospitalUseCase {

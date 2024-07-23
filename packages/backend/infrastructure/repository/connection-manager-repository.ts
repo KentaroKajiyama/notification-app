@@ -1,8 +1,8 @@
 import { injectable } from "inversify";
-import { IConnectionManagerRepository } from "../../domain/repository/connection-manager.js";
-import { HospitalId } from "../../domain/value-object/id.vo.js";
+import { IConnectionManagerRepository } from "../../domain/repository/connection-manager.ts";
+import { HospitalId } from "../../domain/value-object/id.vo.ts";
 import { Request, Response } from "express";
-import { ConnectionMockDB } from "../mock_data/mock-data.js";
+import { ConnectionMockDB } from "../mock_data/mock-data.ts";
 
 @injectable()
 export class ConnectionManagerRepositoryImpl implements IConnectionManagerRepository {

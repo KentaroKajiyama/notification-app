@@ -1,7 +1,7 @@
-import { IConnectionManagerRepository } from "../../domain/repository/connection-manager.js";
-import { createHospitalId } from "../../domain/value-object/id.vo.js";
+import { IConnectionManagerRepository } from "../../domain/repository/connection-manager.ts";
+import { createHospitalId } from "../../domain/value-object/id.vo.ts";
 import { inject, injectable } from "inversify";
-import { TYPES } from "../../di/types.js";
+import { TYPES } from "../../di/types.ts";
 
 export interface IRemoveConnectionUseCase {
   execute(id: string): Promise<void>;

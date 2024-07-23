@@ -68,10 +68,14 @@ export class PatientMockDB{
       throw new Error(`Error removing data from DB: ${error}`);
     }
   }
-  static async getData(id: string):Promise<PatientData | undefined>{
+  static async getData(id: string):Promise<PatientData>{
     try{
       if(!this.data.some(p => p.id===id)){throw new Error(`Data does not exist for patient id: ${id}`);}
-      return this.data.find(p => p.id===id);
+      const data = this.data.find(p=> p.id === id);
+      if(data === undefined){
+        throw new Error("Data is undefined")
+      }
+      return data;
     } catch(error){
       throw new Error(`Error getting data from DB: ${error}`);
     }
@@ -82,7 +86,7 @@ type HospitalData ={
   id: string,
   name: string,
   ip_address: string,
-  port: string
+  port: number
 }
 export class HospitalMockDB{
   static data: HospitalData[] = [];

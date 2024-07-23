@@ -13,6 +13,15 @@ const TYPES = {
   ISearchHospitalUseCase: Symbol.for("ISearchHospitalUseCase"),
   IServerSentEventsUseCase: Symbol.for("IServerSentEventsUseCase"),
   IHospitalRepository: Symbol.for("IHospitalRepository"),
+  // database操作時
+  AddPatientHandler: Symbol.for("AddPatientHandler"),
+  IAddPatientUseCase: Symbol.for("IAddPatientUseCase"),
+  RemovePatientHandler: Symbol.for("RemovePatientHandler"),
+  IRemovePatientUseCase: Symbol.for("IRemovePatientUseCase"),
+  AddHospitalHandler: Symbol.for("AddHospitalHandler"),
+  IAddHospitalUseCase: Symbol.for("IAddHospitalUseCase"),
+  RemoveHospitalHandler: Symbol.for("RemoveHospitalHandler"),
+  IRemoveHospitalUseCase: Symbol.for("IRemoveHospitalUseCase"),
 }
 
 export{ TYPES }

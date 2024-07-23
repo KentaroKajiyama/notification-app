@@ -1,4 +1,4 @@
-import { HospitalId } from "../value-object/id.vo.js";
+import { HospitalId } from "../value-object/id.vo.ts";
 import { Request, Response } from "express";
 
 export interface IConnectionManagerRepository {

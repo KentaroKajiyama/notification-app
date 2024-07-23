@@ -1,8 +1,8 @@
-import { IConnectionManagerRepository } from "../../domain/repository/connection-manager.js";
-import { PatientEntity } from "../../domain/entity/patient.js";
-import { HospitalEntity } from "../../domain/entity/hospital.js";
+import { IConnectionManagerRepository } from "../../domain/repository/connection-manager.ts";
+import { PatientEntity } from "../../domain/entity/patient.ts";
+import { HospitalEntity } from "../../domain/entity/hospital.ts";
 import { inject, injectable } from "inversify";
-import { TYPES } from "../../di/types.js";
+import { TYPES } from "../../di/types.ts";
 
 export interface IServerSentEventsUseCase{
   execute(patient: PatientEntity, hospital: HospitalEntity):Promise<void>;

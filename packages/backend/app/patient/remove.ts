@@ -1,23 +1,22 @@
-import { PatientId } from "../../domain/value-object/id.vo.ts";
 import { IPatientRepository } from "../../domain/repository/patient-repository.ts";
-import { PatientEntity } from "../../domain/entity/patient.ts";
 import { inject, injectable } from "inversify";
 import "reflect-metadata";
 import { TYPES } from "../../di/types.ts";
+import { createPatientId } from "../../domain/value-object/id.vo.ts";
 
-export interface ISearchPatientUseCase{
-  execute(id: PatientId): Promise<PatientEntity>
+export interface IRemovePatientUseCase{
+  execute(id: string): Promise<void>
 }
 @injectable()
-export class SearchPatientUseCaseImpl implements ISearchPatientUseCase{
+export class RemovePatientUseCaseImpl implements IRemovePatientUseCase{
   private _patientRepository: IPatientRepository
   constructor(@inject(TYPES.IPatientRepository) patientRepository: IPatientRepository){
     this._patientRepository = patientRepository
   }
-  async execute(id: PatientId): Promise<PatientEntity>{
+  async execute(id: string): Promise<void>{
     try{
-      const patient = await this._patientRepository.findById(id);
-      return patient;
+      const id_valid = createPatientId(id);
+      await this._patientRepository.removePatient(id_valid)
     } catch(err){
       console.log(err);
       throw new Error("Failed to find patient");
