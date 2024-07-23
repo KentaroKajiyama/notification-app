@@ -40,6 +40,8 @@ sseContainer.bind<ISearchHospitalUseCase>(TYPES.ISearchHospitalUseCase).to(Searc
 sseContainer.bind<IServerSentEventsUseCase>(TYPES.IServerSentEventsUseCase).to(ServerSentEventsUseCaseImpl);
 sseContainer.bind<IHospitalRepository>(TYPES.IHospitalRepository).to(HospitalRepositoryImpl);
 
+sseContainer.bind<IConnectionManagerRepository>(TYPES.IConnectionManagerRepository).to(ConnectionManagerRepositoryImpl);
+
 // DB操作時の依存解決用のコンテナ
 const dbContainer = new Container();
 dbContainer.bind<AddPatientHandler>(TYPES.AddPatientHandler).to(AddPatientHandler);

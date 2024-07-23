@@ -20,6 +20,7 @@ export class AddPatientUseCaseImpl implements IAddPatientUseCase{
   }
   execute = async(patient_dto: PatientDto): Promise<void> => {
     try{
+      console.log(`usecase, id: ${patient_dto.id} name:${patient_dto.name}`)
       const patient_valid = await new PatientEntity(patient_dto.id, patient_dto.name);
       await this._patientRepository.addPatient(patient_valid)
     } catch(err){

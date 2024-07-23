@@ -9,6 +9,7 @@ import { PatientEntity } from "../../domain/entity/patient.ts";
 export class PatientRepositoryImpl implements IPatientRepository {
   findById = async(id: PatientId): Promise<PatientEntity> => {
     try{
+      console.log(`id: ${id}`)
       const patient_data = await PatientMockDB.getData(id);
       return new PatientEntity(patient_data.id, patient_data.name)
     } catch(error){

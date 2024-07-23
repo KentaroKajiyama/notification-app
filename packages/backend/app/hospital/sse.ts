@@ -11,7 +11,7 @@ export interface IServerSentEventsUseCase{
 export class ServerSentEventsUseCaseImpl implements IServerSentEventsUseCase {
   private _connectionManagerRepository: IConnectionManagerRepository;
 
-  constructor(@inject(TYPES.IHospitalRepository) connectionManagerRepository: IConnectionManagerRepository) {
+  constructor(@inject(TYPES.IConnectionManagerRepository) connectionManagerRepository: IConnectionManagerRepository) {
     this._connectionManagerRepository = connectionManagerRepository;
   }
 

@@ -29,7 +29,6 @@ export class ConnectionHandler {
       if (!errors.isEmpty()) {
         res.status(400).json({ errors: errors.array() });
       }
-      //requestの形はどのように規定する？validationルールはどのように設ける？上の記述にも関連する
       const { id } = req.body;
       res.setHeader('Content-Type', 'text/event-stream');
       res.setHeader('Connection', 'keep-alive');
@@ -39,13 +38,15 @@ export class ConnectionHandler {
         try{
           this._removeConnectionUseCase.execute(id);
         } catch(error){
-          return res.status(500).json({message: "Internal Server Error."})
+          return res.end()
         }
       });
       await this._addConnectionUseCase.execute(id, req, res);
-      res.status(200).json({message: "Succeeded in connection."})
+      res.write('data: Succeeded in connection.\n\n'); 
     } catch(error){
-      res.status(500).json({message: "Internal Server Error."})
+      console.error("Error during execution:", error);
+      res.write('data: Internal Server Error.\n\n'); // エラーメッセージを送信
+      res.end(); // エラー発生時はストリームを終了
     }
   }
 }
@@ -92,7 +93,7 @@ export class AddHospitalHandler{
       const { id, name, ip_address, port } = req.body;
       const hospitalDto = { id, name, ip_address, port };
       await this._addHospitalUseCase.execute(hospitalDto);
-      res.status(201).json({ message: "Patient added successfully" });
+      res.status(201).json({ message: "Hospital added successfully" });
     } catch(err){
       console.error(err);
       res.status(500).json({ message: "Internal Server Error" });

@@ -22,6 +22,7 @@ export class CheckinHandler {
         res.status(400).json({ errors: errors.array() });
       }
       const { patient_id, hospital_id } = req.body;
+      console.log(`patient_id: ${patient_id}, hospital_id: ${hospital_id}`)
       const patient = await this._searchPatientUseCase.execute(patient_id);
       await axios.post("http://localhost:3000/api/v1/hospital/sse",{patient: JSON.stringify(patient), hospital_id: hospital_id});
       res.status(200).json({ message: "Check-in successful" });
@@ -44,6 +45,7 @@ export class AddPatientHandler {
         res.status(400).json({ errors: errors.array() });
       }
       const { id, name } = req.body;
+      console.log(`handler, id: ${id}, name: ${name}`)
       const patientDto = { id, name };
       await this._addPatientUseCase.execute(patientDto);
       res.status(201).json({ message: "Patient added successfully" });
