@@ -1,6 +1,8 @@
+import { CheckinHandler } from "../presentation/patient/handler.ts"
+
 const TYPES = {
   // checkin時用
-  PatientHandler: Symbol.for("PatientHandler"),
+  CheckinHandler: Symbol.for("CheckingHandler"),
   ISearchPatientUseCase: Symbol.for("ISearchPatientUseCase"),
   IPatientRepository: Symbol.for("IPatientRepository"),
   // connect時

@@ -15,27 +15,42 @@ import { IRemoveHospitalUseCase, RemoveHospitalUseCaseImpl } from "../app/hospit
 import { IServerSentEventsUseCase, ServerSentEventsUseCaseImpl } from "../app/hospital/sse.ts";
 import { IHospitalRepository } from "../domain/repository/hospital-repository.ts";
 import { HospitalRepositoryImpl } from "../infrastructure/repository/hospital-repository.ts";
+import { CheckinHandler } from "../presentation/patient/handler.ts";
+import { AddPatientHandler, RemovePatientHandler } from "../presentation/patient/handler.ts";
+import { AddHospitalHandler, RemoveHospitalHandler, ServerSentEventsHandler, ConnectionHandler } from "../presentation/hospital/handler.ts";
+import { ISearchHospitalUseCase, SearchHospitalUseCaseImpl } from "../app/hospital/search.ts";
 
 const checkinContainer = new Container();
 // 患者がCheckin時の依存解決用のコンテナ
+checkinContainer.bind<CheckinHandler>(TYPES.CheckinHandler).to(CheckinHandler);
 checkinContainer.bind<ISearchPatientUseCase>(TYPES.ISearchPatientUseCase).to(SearchPatientUseCaseImpl);
 checkinContainer.bind<IPatientRepository>(TYPES.IPatientRepository).to(PatientRepositoryImpl);
 checkinContainer.bind<IHospitalRepository>(TYPES.IHospitalRepository).to(HospitalRepositoryImpl);
 // 病院がconnectしてきた際の依存解決用のコンテナ
 const connectionContainer = new Container();
+connectionContainer.bind<ConnectionHandler>(TYPES.ConnectionHandler).to(ConnectionHandler)
 connectionContainer.bind<IAddConnectionUseCase>(TYPES.IAddConnectionUseCase).to(AddConnectionUseCaseImpl);
 connectionContainer.bind<IRemoveConnectionUseCase>(TYPES.IRemoveConnectionUseCase).to(RemoveConnectionUseCaseImpl);
 connectionContainer.bind<IConnectionManagerRepository>(TYPES.IConnectionManagerRepository).to(ConnectionManagerRepositoryImpl);
 
 // SSEの依存解決用のコンテナ
 const sseContainer = new Container();
-connectionContainer.bind<IServerSentEventsUseCase>(TYPES.IServerSentEventsUseCase).to(ServerSentEventsUseCaseImpl);
+sseContainer.bind<ServerSentEventsHandler>(TYPES.ServerSentEventsHandler).to(ServerSentEventsHandler);
+sseContainer.bind<ISearchHospitalUseCase>(TYPES.ISearchHospitalUseCase).to(SearchHospitalUseCaseImpl);
+sseContainer.bind<IServerSentEventsUseCase>(TYPES.IServerSentEventsUseCase).to(ServerSentEventsUseCaseImpl);
+sseContainer.bind<IHospitalRepository>(TYPES.IHospitalRepository).to(HospitalRepositoryImpl);
 
 // DB操作時の依存解決用のコンテナ
 const dbContainer = new Container();
-connectionContainer.bind<IAddPatientUseCase>(TYPES.IAddPatientUseCase).to(AddPatientUseCaseImpl);
-connectionContainer.bind<IRemovePatientUseCase>(TYPES.IRemovePatientUseCase).to(RemovePatientUseCaseImpl);
-connectionContainer.bind<IAddHospitalUseCase>(TYPES.IAddHospitalUseCase).to(AddHospitalUseCaseImpl);
-connectionContainer.bind<IRemoveHospitalUseCase>(TYPES.IRemoveHospitalUseCase).to(RemoveHospitalUseCaseImpl);
+dbContainer.bind<AddPatientHandler>(TYPES.AddPatientHandler).to(AddPatientHandler);
+dbContainer.bind<IAddPatientUseCase>(TYPES.IAddPatientUseCase).to(AddPatientUseCaseImpl);
+dbContainer.bind<RemovePatientHandler>(TYPES.RemovePatientHandler).to(RemovePatientHandler);
+dbContainer.bind<IRemovePatientUseCase>(TYPES.IRemovePatientUseCase).to(RemovePatientUseCaseImpl);
+dbContainer.bind<AddHospitalHandler>(TYPES.AddHospitalHandler).to(AddHospitalHandler);
+dbContainer.bind<IAddHospitalUseCase>(TYPES.IAddHospitalUseCase).to(AddHospitalUseCaseImpl);
+dbContainer.bind<RemoveHospitalHandler>(TYPES.RemoveHospitalHandler).to(RemoveHospitalHandler);
+dbContainer.bind<IRemoveHospitalUseCase>(TYPES.IRemoveHospitalUseCase).to(RemoveHospitalUseCaseImpl);
+dbContainer.bind<IPatientRepository>(TYPES.IPatientRepository).to(PatientRepositoryImpl);
+dbContainer.bind<IHospitalRepository>(TYPES.IHospitalRepository).to(HospitalRepositoryImpl);
 
 export { checkinContainer, connectionContainer, sseContainer, dbContainer };

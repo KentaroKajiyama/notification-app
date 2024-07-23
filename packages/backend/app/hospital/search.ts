@@ -2,6 +2,7 @@ import { IHospitalRepository } from "../../domain/repository/hospital-repository
 import { inject, injectable } from "inversify";
 import { HospitalEntity } from "../../domain/entity/hospital.ts";
 import { TYPES } from "../../di/types.ts";
+import { createHospitalId } from "../../domain/value-object/id.vo.ts";
 
 
 export interface ISearchHospitalUseCase {
@@ -15,7 +16,8 @@ export class SearchHospitalUseCaseImpl implements ISearchHospitalUseCase {
   }
   async execute(id: string): Promise<HospitalEntity> {
     try{
-      return this._hospitalRepository.findById(id);
+      const hospital_id = createHospitalId(id);
+      return this._hospitalRepository.findById(hospital_id);
     } catch(error){
       console.log(error);
       throw new Error("There is an error for fetching hospital information.")

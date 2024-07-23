@@ -8,7 +8,7 @@ import { TYPES } from "../di/types.ts";
 
 const app = express();
 const port = 3000;
-const checkinHandler = checkinContainer.get<CheckinHandler>(TYPES.PatientHandler);
+const checkinHandler = checkinContainer.get<CheckinHandler>(TYPES.CheckinHandler);
 const addPatientHandler = dbContainer.get<AddPatientHandler>(TYPES.AddPatientHandler);
 const removePatientHandler = dbContainer.get<RemovePatientHandler>(TYPES.RemovePatientHandler);
 const addHospitalHandler = dbContainer.get<AddHospitalHandler>(TYPES.AddHospitalHandler);
