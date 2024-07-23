@@ -1,6 +1,6 @@
-import { HospitalId } from "../value-object/id.vo.js";
-import { IpAddress } from "../value-object/ip-address.vo.js";
-import { Port } from "../value-object/port.vo.js";
+import { HospitalId } from "../value-object/id.vo.ts";
+import { IpAddress } from "../value-object/ip-address.vo.ts";
+import { Port } from "../value-object/port.vo.ts";
 
 export class HospitalEntity{
   private readonly _id: HospitalId;

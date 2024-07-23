@@ -3,7 +3,7 @@ import { IPatientRepository } from "../../domain/repository/patient-repository.j
 import { injectable } from "inversify";
 import "reflect-metadata";
 import { PatientId } from "../../domain/value-object/id.vo.js";
-import { PatientEntity } from "../../domain/entity/patient.js";
+import { PatientEntity } from "../../domain/entity/patient.test.js";
 
 
 @injectable()

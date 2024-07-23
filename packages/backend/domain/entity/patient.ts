@@ -1,5 +1,5 @@
-import { PatientId } from "../value-object/id.vo.js";
-import { createPatientId } from "../value-object/id.vo.js";
+import { PatientId } from "../value-object/id.vo.ts";
+import { createPatientId } from "../value-object/id.vo.ts";
 
 export class PatientEntity{
   private readonly _id: PatientId;
