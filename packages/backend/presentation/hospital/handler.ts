@@ -23,7 +23,7 @@ export class ConnectionHandler {
     this._removeConnectionUseCase = removeConnectionUseCase;
   }
 
-  async execute(req: Request, res: Response): Promise<void> {
+  execute = async(req: Request, res: Response): Promise<void> => {
     try{
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -59,7 +59,7 @@ export class ServerSentEventsHandler {
     this._serverSentEventsUseCase = serverSentEventsUseCase;
   }
 
-  async execute(req: Request, res: Response): Promise<void>{
+  execute = async(req: Request, res: Response): Promise<void> => {
     try{
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -83,7 +83,7 @@ export class AddHospitalHandler{
   constructor(@inject(TYPES.IAddHospitalUseCase) addHospitalUseCase: IAddHospitalUseCase){
     this._addHospitalUseCase  = addHospitalUseCase;
   }
-  async execute(req : Request, res: Response):Promise<void>{
+  execute = async(req : Request, res: Response):Promise<void> => {
     try{
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -106,7 +106,7 @@ export class RemoveHospitalHandler{
   constructor(@inject(TYPES.IRemoveHospitalUseCase) removeHospitalUseCase: IRemoveHospitalUseCase){
     this._removeHospitalUseCase  = removeHospitalUseCase;
   }
-  async execute(req : Request, res: Response):Promise<void>{
+  execute = async(req : Request, res: Response):Promise<void> => {
     try{
       const errors = validationResult(req);
       if (!errors.isEmpty()) {

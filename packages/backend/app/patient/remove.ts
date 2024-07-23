@@ -13,7 +13,7 @@ export class RemovePatientUseCaseImpl implements IRemovePatientUseCase{
   constructor(@inject(TYPES.IPatientRepository) patientRepository: IPatientRepository){
     this._patientRepository = patientRepository
   }
-  async execute(id: string): Promise<void>{
+  execute = async(id: string): Promise<void> => {
     try{
       const id_valid = createPatientId(id);
       await this._patientRepository.removePatient(id_valid)

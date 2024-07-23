@@ -6,7 +6,7 @@ import { ConnectionMockDB } from "../mock_data/mock-data.ts";
 
 @injectable()
 export class ConnectionManagerRepositoryImpl implements IConnectionManagerRepository {
-  async addConnection(id: HospitalId, request: Request, response: Response): Promise<void> {
+  addConnection = async(id: HospitalId, request: Request, response: Response): Promise<void> => {
     try{
       ConnectionMockDB.addData(id, [request, response]);
     } catch(error){
@@ -14,7 +14,7 @@ export class ConnectionManagerRepositoryImpl implements IConnectionManagerReposi
       throw new Error("There is a data handling error for adding connection.")
     }
   }
-  async removeConnection(id: HospitalId): Promise<void> {
+  removeConnection = async(id: HospitalId): Promise<void> => {
     try{
       ConnectionMockDB.removeData(id);
     } catch(error){
@@ -22,7 +22,7 @@ export class ConnectionManagerRepositoryImpl implements IConnectionManagerReposi
       throw new Error("There is a data handling error for removing connection.")
     }
   }
-  async getConnection(id: HospitalId): Promise<[Request, Response]> {
+  getConnection = async(id: HospitalId): Promise<[Request, Response]> => {
     try{  
       const connection:[Request, Response] = await ConnectionMockDB.getData(id);
       return connection;

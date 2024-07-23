@@ -14,7 +14,7 @@ export class SearchHospitalUseCaseImpl implements ISearchHospitalUseCase {
   constructor(@inject(TYPES.IHospitalRepository) hospitalRepository: IHospitalRepository) {
     this._hospitalRepository = hospitalRepository;
   }
-  async execute(id: string): Promise<HospitalEntity> {
+  execute = async(id: string): Promise<HospitalEntity> => {
     try{
       const hospital_id = createHospitalId(id);
       return this._hospitalRepository.findById(hospital_id);

@@ -18,7 +18,7 @@ export class AddPatientUseCaseImpl implements IAddPatientUseCase{
   constructor(@inject(TYPES.IPatientRepository) patientRepository: IPatientRepository){
     this._patientRepository = patientRepository
   }
-  async execute(patient_dto: PatientDto): Promise<void>{
+  execute = async(patient_dto: PatientDto): Promise<void> => {
     try{
       const patient_valid = await new PatientEntity(patient_dto.id, patient_dto.name);
       await this._patientRepository.addPatient(patient_valid)

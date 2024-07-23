@@ -14,7 +14,7 @@ export class SearchPatientUseCaseImpl implements ISearchPatientUseCase{
   constructor(@inject(TYPES.IPatientRepository) patientRepository: IPatientRepository){
     this._patientRepository = patientRepository
   }
-  async execute(id: PatientId): Promise<PatientEntity>{
+  execute = async (id: PatientId): Promise<PatientEntity> => {
     try{
       const patient = await this._patientRepository.findById(id);
       return patient;

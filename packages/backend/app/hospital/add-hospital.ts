@@ -21,7 +21,7 @@ export class AddHospitalUseCaseImpl implements IAddHospitalUseCase {
     this._hospitalRepository = hospitalRepository;
   };
 
-  async execute(hospital: hospitalDto): Promise<void> {
+  execute = async(hospital: hospitalDto): Promise<void> =>{
     try{
       await this._hospitalRepository.addHospital(new HospitalEntity(hospital.id, hospital.name, hospital.ip_address, hospital.port))
     } catch(error) {

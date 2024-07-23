@@ -12,7 +12,7 @@ export class RemoveConnectionUseCaseImpl implements IRemoveConnectionUseCase {
   constructor(@inject(TYPES.IConnectionManagerRepository) connectionManagerRepository: IConnectionManagerRepository) {
     this._connectionManagerRepository = connectionManagerRepository;
   }
-  async execute(id: string): Promise<void> {
+  execute = async(id: string): Promise<void> => {
     try{
       const hospital_id = createHospitalId(id)
       this._connectionManagerRepository.removeConnection(hospital_id);

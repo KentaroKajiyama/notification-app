@@ -15,7 +15,7 @@ export class ServerSentEventsUseCaseImpl implements IServerSentEventsUseCase {
     this._connectionManagerRepository = connectionManagerRepository;
   }
 
-  async execute(patient: PatientEntity, hospital: HospitalEntity): Promise<void> {
+  execute = async(patient: PatientEntity, hospital: HospitalEntity): Promise<void> => {
     try{
       const hospital_id = hospital.getId
       const [request, response] = await this._connectionManagerRepository.getConnection(hospital_id);

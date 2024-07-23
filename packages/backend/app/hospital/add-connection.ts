@@ -14,7 +14,7 @@ export class AddConnectionUseCaseImpl implements IAddConnectionUseCase  {
   constructor(@inject(TYPES.IConnectionManagerRepository) connectionManagerRepository: IConnectionManagerRepository) {
     this._connectionManagerRepository = connectionManagerRepository;
   }
-  async execute(id: string, request: Request, response: Response) : Promise<void>{
+  execute = async(id: string, request: Request, response: Response) : Promise<void> => {
     try{
       const hospital_id = createHospitalId(id);
       this._connectionManagerRepository.addConnection(hospital_id, request, response);

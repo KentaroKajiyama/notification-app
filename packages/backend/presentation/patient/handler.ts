@@ -7,6 +7,7 @@ import { TYPES } from "../../di/types.js";
 import "reflect-metadata";
 import { IAddPatientUseCase } from "../../app/patient/add.js";
 import { IRemovePatientUseCase } from "../../app/patient/remove.js";
+import { any } from "zod";
 
 @injectable()
 export class CheckinHandler {
@@ -14,7 +15,7 @@ export class CheckinHandler {
   constructor(@inject(TYPES.ISearchPatientUseCase) searchPatientUseCase: ISearchPatientUseCase) {
     this._searchPatientUseCase = searchPatientUseCase;
   }
-  async execute(req: Request, res: Response):Promise<void>{
+  execute = async (req: Request, res: Response):Promise<void> => {
     try{
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -36,7 +37,7 @@ export class AddPatientHandler {
   constructor(@inject(TYPES.IAddPatientUseCase) addPatientUseCase: IAddPatientUseCase) {
     this._addPatientUseCase = addPatientUseCase;
   }
-  async execute(req: Request, res: Response): Promise<void> {
+  execute = async(req: Request, res: Response): Promise<void> => {
     try{
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -59,7 +60,7 @@ export class RemovePatientHandler {
   constructor(@inject(TYPES.IRemovePatientUseCase) removePatientUseCase: IRemovePatientUseCase) {
     this._removePatientUseCase = removePatientUseCase;
   }
-  async execute(req: Request, res: Response): Promise<void> {
+  execute = async(req: Request, res: Response): Promise<void> => {
     try{
       const { id } = req.params;
       await this._removePatientUseCase.execute(id);

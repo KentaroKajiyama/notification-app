@@ -12,7 +12,7 @@ export class RemoveHospitalUseCaseImpl implements IRemoveHospitalUseCase{
   constructor(@inject(TYPES.IHospitalRepository) hospitalRepository: IHospitalRepository){
     this._hospitalRepository = hospitalRepository
   }
-  async execute(id: string): Promise<void>{
+  execute = async(id: string): Promise<void> =>{
     try{
       const id_valid = createHospitalId(id);
       await this._hospitalRepository.removeHospital(id_valid)
