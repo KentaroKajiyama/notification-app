@@ -10,5 +10,5 @@ build
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# TEST
-*test.ts
+# tests
+*.test.ts
