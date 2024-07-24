@@ -16,8 +16,8 @@ export class RemoveHospitalUseCaseImpl implements IRemoveHospitalUseCase{
     try{
       const id_valid = createHospitalId(id);
       await this._hospitalRepository.removeHospital(id_valid)
-    } catch(err){
-      console.log(err);
+    } catch(error){
+      console.log(error);
       throw new Error("Failed to find hospital");
     }
   }

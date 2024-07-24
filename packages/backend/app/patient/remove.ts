@@ -17,8 +17,8 @@ export class RemovePatientUseCaseImpl implements IRemovePatientUseCase{
     try{
       const id_valid = createPatientId(id);
       await this._patientRepository.removePatient(id_valid)
-    } catch(err){
-      console.log(err);
+    } catch(error){
+      console.log(error);
       throw new Error("Failed to find patient");
     }
   }

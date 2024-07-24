@@ -28,17 +28,21 @@ export class ConnectionHandler {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         res.status(400).json({ errors: errors.array() });
+        return;
       }
-      const { id } = req.body;
+      const id = req.params.id;
       res.setHeader('Content-Type', 'text/event-stream');
-      res.setHeader('Connection', 'keep-alive');
       res.setHeader('Cache-Control', 'no-cache');
-      res.write("\n")
-      req.on("close", async () => {
+      res.setHeader('Connection', 'keep-alive');
+      res.flushHeaders();
+      res.write("data: connection established\n\n");
+      req.on('close', async () => {
         try{
-          this._removeConnectionUseCase.execute(id);
+          await this._removeConnectionUseCase.execute(id);
         } catch(error){
-          return res.end()
+          console.log(error);
+        } finally {
+          res.end();
         }
       });
       await this._addConnectionUseCase.execute(id, req, res);
@@ -66,7 +70,9 @@ export class ServerSentEventsHandler {
       if (!errors.isEmpty()) {
         res.status(400).json({ errors: errors.array() });
       }
-      const { patient, hospital_id } = req.body;
+      //入れ子のJSONなので2度parseが必要
+      const { patient:patientString, hospital_id } = req.body;
+      const patient = JSON.parse(patientString)
       const hospital_valid = await this._searchHospitalUseCase.execute(hospital_id);
       const patient_id = createPatientId(patient.id);
       const patient_valid = new PatientEntity(patient_id, patient.name);

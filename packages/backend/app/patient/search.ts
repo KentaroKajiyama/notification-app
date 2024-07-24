@@ -18,8 +18,8 @@ export class SearchPatientUseCaseImpl implements ISearchPatientUseCase{
     try{
       const patient = await this._patientRepository.findById(id);
       return patient;
-    } catch(err){
-      console.log(err);
+    } catch(error){
+      console.log(error);
       throw new Error("Failed to find patient");
     }
   }
