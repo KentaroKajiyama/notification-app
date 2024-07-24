@@ -12,3 +12,6 @@ build
 
 # tests
 *.test.ts
+
+# ENVIRONMENT
+.env
