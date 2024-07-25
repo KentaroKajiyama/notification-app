@@ -35,7 +35,7 @@ export class ConnectionHandler {
       res.setHeader('Cache-Control', 'no-cache');
       res.setHeader('Connection', 'keep-alive');
       res.flushHeaders();
-      res.write("data: connection established\n\n");
+      res.write("\n");
       req.on('close', async () => {
         try{
           await this._removeConnectionUseCase.execute(id);
@@ -46,7 +46,6 @@ export class ConnectionHandler {
         }
       });
       await this._addConnectionUseCase.execute(id, req, res);
-      res.write('data: Succeeded in connection.\n\n'); 
     } catch(error){
       console.error("Error during execution:", error);
       res.write('data: Internal Server Error.\n\n'); // エラーメッセージを送信

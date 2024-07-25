@@ -4,12 +4,12 @@ import { ConnectionHandler, AddHospitalHandler, RemoveHospitalHandler } from "..
 import { ServerSentEventsHandler } from "../presentation/hospital/handler.ts";
 import { checkinContainer, connectionContainer, sseContainer, dbContainer } from "../di/inversify.config.ts";
 import { TYPES } from "../di/types.ts";
-import { validationResult } from "express-validator";
+import cors from "cors";
 
 
 
 const app = express();
-const port = 3000;
+const port = 3030;
 const checkinHandler = checkinContainer.get<CheckinHandler>(TYPES.CheckinHandler);
 const addPatientHandler = dbContainer.get<AddPatientHandler>(TYPES.AddPatientHandler);
 const removePatientHandler = dbContainer.get<RemovePatientHandler>(TYPES.RemovePatientHandler);
@@ -19,7 +19,9 @@ const connectionHandler = connectionContainer.get<ConnectionHandler>(TYPES.Conne
 const sseHandler = sseContainer.get<ServerSentEventsHandler>(TYPES.ServerSentEventsHandler);
 
 app.use(express.json());
-
+app.use(cors({
+  origin: 'http://localhost:3000' // ここに許可するオリジンを指定
+}));
 app.post("/api/v1/patient/checkin", checkinHandler.execute);
 app.post("/api/v1/patient/add", addPatientHandler.execute);
 app.delete("/api/v1/patient/remove", removePatientHandler.execute);
