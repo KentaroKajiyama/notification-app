@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# notification-app-backend
 
-## Getting Started
+## 概要
 
-First, run the development server:
+SSEによる通知機能を実装するためのフロントエンドリポジトリです。  
+FrontendはNext.jsを基盤に実装しています。(https://expressjs.com/)
+主な機能としては通知を受け取った際のブラウザのfaviconへのバッジ数の反映とトーストの表示です。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ディレクトリ構成
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### /app
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+nextの app router で使用するページを配置するディレクトリです。
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### /domain
 
-## Learn More
+アプリケーションで利用するドメインを配置するディレクトリです
 
-To learn more about Next.js, take a look at the following resources:
+### /infrastructure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+インフラストラクチャ層のコードを配置します。  
+各種clientやrepositoryはdomain層で定義されているinterfaceに依存させる形で実装します。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+主に API とのやりとりを repositoryで定義します。
 
-## Deploy on Vercel
+### /ui
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+アプリケーションで利用するUIコンポーネントを配置するディレクトリです。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+#### /components
+
+uiコンポーネントを配置します。
+
+#### /hooks
+
+カスタムフックを配置するディレクトリです。
+
+#### /vm
+
+View modelを配置するディレクトリです VMは画面の状態を管理するために利用します。
